@@ -12,6 +12,6 @@ input your password for check:password
 
 ```
 
-# Цели проект
+# Цели проекта
 
 Тестовый код для образовательного проекта - [DEVMAN.org](https://devman.org)
