@@ -1,6 +1,16 @@
 # Password Strength Calculator
 
-[TODO. There will be project description]
+Скрипт для вычисления сложности пароля.
+Используются проверки разнообразия символов, длины пароля, проверки по словарю худших паролей.
+Файл с худщими паролями идет в комплекте
+
+# Пример запуска
+```
+python3 password_strength.py 
+input your password for check:password
+1
+
+```
 
 # Project Goals
 
