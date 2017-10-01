@@ -1,4 +1,4 @@
-# Password Strength Calculator
+# Вычисление сложности пароля
 
 Скрипт для вычисления сложности пароля.
 Используются проверки разнообразия символов, длины пароля, проверки по словарю худших паролей.
@@ -12,6 +12,6 @@ input your password for check:password
 
 ```
 
-# Project Goals
+# Цели проекта
 
-The code is written for educational purposes. Training course for web-developers - [DEVMAN.org](https://devman.org)
+Тестовый код для образовательного проекта - [DEVMAN.org](https://devman.org)
