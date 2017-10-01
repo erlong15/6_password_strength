@@ -1,5 +1,5 @@
 import re
-
+import getpass
 
 def get_password_strength(password):
     with open('500-worst-passwords.txt', 'r') as blacklist_file:
@@ -33,5 +33,5 @@ def get_password_strength(password):
 
 
 if __name__ == '__main__':
-    password = input("input your password for check:")
-    print(get_password_strength(password))
+    password = getpass.getpass("input your password for check:")
+    print('Your password strength is %d' % get_password_strength(password))
