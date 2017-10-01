@@ -24,10 +24,9 @@ def get_password_strength(password):
         strength = strength + base_strength + dict_strength + \
                    len(re.findall(r'[\,\.\!\@\#\&\$]', password)) + \
                    (1 if len(password) > 10 else 0)
-        if strength > 10:
-            strength = 10
-        if strength <= 0:
-            strength = 1
+
+        if not 0 < strength < 11:
+            strength = 10 if strength > 10 else 1
 
     return strength
 
