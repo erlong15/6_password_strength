@@ -18,7 +18,7 @@ def get_dict_strength(password):
     blacklist = read_worst_passwords()
     dict_strength = 1
 
-    if len(blacklist) == 0:
+    if not blacklist:
         dict_strength = 0
     elif password in blacklist:
         dict_strength = -3
