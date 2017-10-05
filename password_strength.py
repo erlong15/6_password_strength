@@ -1,5 +1,7 @@
 import re
 import getpass
+import argparse
+import string
 
 
 def read_worst_passwords():
@@ -38,25 +40,42 @@ def get_alphanum_check_points(password):
 
 def get_password_strength(password, in_blacklist):
     strength = 1
+    symbol_regexp = re.compile("[%s]" % string.punctuation)
+    min_length = 6
+    good_length = 10
+    min_points = 1
+    max_points = 10
 
-    if len(password) > 6:
+    if len(password) > min_length:
         strength = (strength +
                     get_alphanum_check_points(password) +
                     get_blacklist_check_points(password, in_blacklist) +
-                    len(re.findall(r'[\,\.\!\@\#\&\$]', password)) +
-                    (1 if len(password) > 10 else 0))
+                    len(symbol_regexp.findall(password)) +
+                    (1 if len(password) > good_length else 0))
 
-        if not 0 < strength < 11:
-            strength = 10 if strength > 10 else 1
+        if not min_points <= strength <= max_points:
+            strength = max_points if strength > max_points else min_points
 
     return strength
 
 
+def get_args():
+    parser = argparse.ArgumentParser(description='Password strength checker.')
+    parser.add_argument('-f', '--blackfile',
+                        help='file with blacklist`s passwords, '
+                             'default 500-worst-passwords.txt',
+                        required=False,
+                        default='500-worst-passwords.txt')
+    args = parser.parse_args()
+    return args
+
+
 if __name__ == '__main__':
-    in_password = getpass.getpass("input your password for check:")
+    args = get_args()
+    input_password = getpass.getpass("input your password for check:")
     blacklist = read_worst_passwords()
     if not blacklist:
-        print("File '500-worst-passwords.txt' is not found or empty")
+        print("File %s is not found or empty" % args.blackfile)
 
-    print('Your password strength is %d' % get_password_strength(in_password,
-                                                                 blacklist))
+    password_strength = get_password_strength(input_password, blacklist)
+    print('Your password strength is %d' % password_strength)
