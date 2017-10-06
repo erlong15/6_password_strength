@@ -4,9 +4,9 @@ import argparse
 import string
 
 
-def read_worst_passwords():
+def read_worst_passwords(filename):
     try:
-        with open('500-worst-passwords.txt', 'r') as blacklist_file:
+        with open(filename, 'r') as blacklist_file:
             black_list = list(map(lambda x: x.strip(),
                                   tuple(blacklist_file.readlines())))
     except IOError:
@@ -15,14 +15,14 @@ def read_worst_passwords():
     return black_list
 
 
-def get_blacklist_check_points(password, in_blacklist):
+def get_blacklist_check_points(password, blacklist):
     check_points = 1
 
-    if not in_blacklist:
+    if not blacklist:
         check_points = 0
-    elif password in in_blacklist:
+    elif password in blacklist:
         check_points = -3
-    elif any(len(word) > 3 and word in password for word in in_blacklist):
+    elif any(len(word) > 3 and word in password for word in blacklist):
         check_points = -2
 
     return check_points
@@ -70,12 +70,16 @@ def get_args():
     return args
 
 
-if __name__ == '__main__':
+def main():
     args = get_args()
     input_password = getpass.getpass("input your password for check:")
-    blacklist = read_worst_passwords()
+    blacklist = read_worst_passwords(args.blackfile)
     if not blacklist:
         print("File %s is not found or empty" % args.blackfile)
 
     password_strength = get_password_strength(input_password, blacklist)
     print('Your password strength is %d' % password_strength)
+
+
+if __name__ == '__main__':
+    main()
